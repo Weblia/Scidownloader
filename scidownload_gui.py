@@ -7,48 +7,6 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-import requests
-import lxml.etree
-import re
-from tkinter import filedialog
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QWidget       #一个是程序，一个是窗口
-import sys
-from design import scidownload_gui
-
-
-def load_pmid(file_path):
-    f = open(file_path, 'r')
-    empty_list = list(f)
-    full_list = []
-    n = 0
-    for i in empty_list:
-        full_list.append(i.rstrip())
-        n = n + 1
-        print(n)
-    print(full_list)
-    print('共' + n + '篇文献')
-    f.close()
-    return full_list
-
-
-def import_pmid_list(self):
-    global pmid_list
-    Fpath = filedialog.askopenfilename()
-    print(Fpath)
-    data = {  # 先完善表单内容
-        'request': 'undefined'
-    }
-    pmid_list = self.load_pmid(Fpath)
-    print(pmid_list)
-    self.textEdit.setPlainText('678')
-
-
-def change_dir():
-    print('change_dir')
-
-
-def start_download():
-    print('start_download')
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -141,10 +99,7 @@ class Ui_MainWindow(object):
         MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
         self.menubar.addAction(self.menuSCI.menuAction())
         self.retranslateUi(MainWindow)
-        #开始设置连接
-        self.pushButton.clicked.connect(self.start_download)
-        self.pushButton_2.clicked.connect(self.import_pmid_list)
-        self.pushButton_3.clicked.connect(self.change_dir)
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -163,18 +118,3 @@ class Ui_MainWindow(object):
         self.pushButton_3.setText(_translate("MainWindow", "修改下载路径"))
         self.menuSCI.setTitle(_translate("MainWindow", "SCI批量下载工具"))
         self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar"))
-
-if __name__ == "__main__":
-    # 创建一个app实例
-    app = QApplication(sys.argv)
-    # 建立一个主窗口
-    mymainWindow = QMainWindow()
-    # 创建UI
-    myui = scidownload_gui.Ui_MainWindow()
-    # 将UI应用于生成的主窗口
-    myui.setupUi(mymainWindow)
-    mymainWindow.show()
-    #开始设置操作
-    #开始设置按钮
-
-    sys.exit(app.exec_())  # 最后退出
